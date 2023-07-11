@@ -7,15 +7,14 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
-	"net/http"
 	"time"
 
-	"github.com/labstack/echo/v4" 
-    "github.com/labstack/echo/v4/middleware"
-    "github.com/CorrectRoadH/echo-sse"
+	echosse "github.com/CorrectRoadH/echo-sse"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
+
 func main() {
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
@@ -24,8 +23,8 @@ func main() {
 	}))
 
 	e.GET("/events", func(c echo.Context) error {
-        client := newSSEClint(c)
-        defer client.Close()
+		client := echosse.newSSEClint(c)
+		defer client.Close()
 		for {
 			const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 			seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -35,8 +34,8 @@ func main() {
 				b[i] = charset[seededRand.Intn(len(charset))]
 			}
 
-            client.SendEvent(string(b))
-            time.Sleep(1 * time.Second)
+			client.SendEvent(string(b))
+			time.Sleep(1 * time.Second)
 		}
 	})
 	e.Logger.Fatal(e.Start(":8080"))
