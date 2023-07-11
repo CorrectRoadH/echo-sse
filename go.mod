@@ -1,4 +1,4 @@
-module github.com/CorrectRoadH/echo-sse
+module github.com/CorrectRoadH/echo/sse
 
 go 1.19
 
