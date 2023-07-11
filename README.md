@@ -1,5 +1,5 @@
 # What is it
-
+This a simple library for sending Server-Sent Events (SSE) with Echo framework.
 
 # Usage
 
@@ -23,7 +23,7 @@ func main() {
 	}))
 
 	e.GET("/events", func(c echo.Context) error {
-		client := echosse.newSSEClint(c)
+		client := echosse.NewSSEClint(c)
 		defer client.Close()
 		for {
 			const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
