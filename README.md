@@ -24,7 +24,6 @@ func main() {
 
 	e.GET("/events", func(c echo.Context) error {
 		client := echosse.NewSSEClint(c)
-		defer client.Close()
 		for {
 			const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 			seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
